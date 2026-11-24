@@ -413,7 +413,7 @@ async def setup_panels(interaction: discord.Interaction):
     panels = [
         ("welcome_channel_id", "Support", "Erstelle ein Ticket für Support, Bug, Frage oder Sonstiges.", SupportPanel()),
         ("team_bewerbung_channel_id", "Team-Bewerbung", "Bewirb dich für das Team. Fülle das Formular vollständig aus.", ApplicationPanel("team")),
-        ("clan_bewerbung_channel_id", "Clan-Bewerbung", "Bewirb dich für den Clan. Eintrittsgeld und Voraussetzungen erfährst du in den Serverinformationen.", ApplicationPanel("clan")),
+        ("clan_bewerbung_channel_id", "Clan-Bewerbung", "Clan-Bewerbung", f"Eintrittsgeld: {CONFIG.get('clan_entry_fee', 'Bitte beim Team erfragen')}\nVoraussetzungen: {CONFIG.get('clan_requirements', 'Bitte beim Team erfragen')}\n\nBewirb dich über den Button.", ApplicationPanel("clan")),
     ]
     posted = []
     for key, title, description, view in panels:
