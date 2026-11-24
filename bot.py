@@ -367,14 +367,20 @@ async def on_ready():
         bot.add_view(view)
     if not giveaway_watcher.is_running():
         giveaway_watcher.start()
-    await bot.tree.sync()
+    guild_id = config_id("guild_id")
+    if guild_id:
+        guild_ref = discord.Object(id=guild_id)
+        bot.tree.copy_global_to(guild=guild_ref)
+        await bot.tree.sync(guild=guild_ref)
+    else:
+        await bot.tree.sync()
     print(f"Angemeldet als {bot.user}")
 
 @bot.event
 async def on_member_join(member):
     channel = bot.get_channel(config_id("welcome_channel_id"))
     if channel:
-        await channel.send(embed=make_embed("Willkommen bei PoisonPulse", f"Willkommen {member.mention} auf **HugoSMP.net**! Schön, dass du dabei bist. Bei Fragen kannst du dich an den Support wenden.", True))
+        await channel.send(embed=make_embed("Willkommen bei PoisonPulse", f"Willkommen {member.mention} auf **HugoSMP.net**! {CONFIG.get('server_info_text', 'Schön, dass du dabei bist.')} Bei Fragen kannst du dich an den Support wenden.", True))
     await write_log(f"User beigetreten | User: {member} | ID: {member.id}")
 
 @bot.event
