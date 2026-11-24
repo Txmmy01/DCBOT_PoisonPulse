@@ -568,6 +568,59 @@ async def role_create(interaction: discord.Interaction, name: str):
     await interaction.response.send_message(f"Rolle erstellt: {role.mention}", ephemeral=True)
     await write_log(f"Rolle erstellt | Rollen-ID: {role.id} | Admin-ID: {interaction.user.id}")
 
+@bot.tree.command(name="channel_delete", description="Löscht einen Channel anhand seiner ID")
+async def channel_delete(interaction: discord.Interaction, channel_id: str):
+    if not is_admin(interaction.user): return await deny(interaction)
+    try: target = interaction.guild.get_channel(int(channel_id))
+    except ValueError: return await interaction.response.send_message("Ungültige Channel-ID.", ephemeral=True)
+    if not target: return await interaction.response.send_message("Channel nicht gefunden.", ephemeral=True)
+    deleted_id = target.id
+    await target.delete(reason=f"Deleted by admin {interaction.user.id}")
+    await interaction.response.send_message(f"Channel {deleted_id} wurde gelöscht.", ephemeral=True)
+    await write_log(f"Channel gelöscht | Channel-ID: {deleted_id} | Admin-ID: {interaction.user.id}")
+
+@bot.tree.command(name="channel_rename", description="Benennt einen Channel anhand seiner ID um")
+async def channel_rename(interaction: discord.Interaction, channel_id: str, neuer_name: str):
+    if not is_admin(interaction.user): return await deny(interaction)
+    try: target = interaction.guild.get_channel(int(channel_id))
+    except ValueError: return await interaction.response.send_message("Ungültige Channel-ID.", ephemeral=True)
+    if not target: return await interaction.response.send_message("Channel nicht gefunden.", ephemeral=True)
+    old_name = target.name
+    await target.edit(name=neuer_name, reason=f"Renamed by admin {interaction.user.id}")
+    await interaction.response.send_message(f"Channel umbenannt: {old_name} zu {neuer_name}.", ephemeral=True)
+    await write_log(f"Channel umbenannt | Channel-ID: {target.id} | Admin-ID: {interaction.user.id}")
+
+@bot.tree.command(name="role_delete", description="Löscht eine Rolle anhand ihrer ID")
+async def role_delete(interaction: discord.Interaction, role_id: str):
+    if not is_admin(interaction.user): return await deny(interaction)
+    try: target = interaction.guild.get_role(int(role_id))
+    except ValueError: return await interaction.response.send_message("Ungültige Rollen-ID.", ephemeral=True)
+    if not target: return await interaction.response.send_message("Rolle nicht gefunden.", ephemeral=True)
+    deleted_id = target.id
+    await target.delete(reason=f"Deleted by admin {interaction.user.id}")
+    await interaction.response.send_message(f"Rolle {deleted_id} wurde gelöscht.", ephemeral=True)
+    await write_log(f"Rolle gelöscht | Rollen-ID: {deleted_id} | Admin-ID: {interaction.user.id}")
+
+@bot.tree.command(name="role_add", description="Gibt einem User eine Rolle anhand der Rollen-ID")
+async def role_add(interaction: discord.Interaction, user: discord.Member, role_id: str):
+    if not is_admin(interaction.user): return await deny(interaction)
+    try: target = interaction.guild.get_role(int(role_id))
+    except ValueError: return await interaction.response.send_message("Ungültige Rollen-ID.", ephemeral=True)
+    if not target: return await interaction.response.send_message("Rolle nicht gefunden.", ephemeral=True)
+    await user.add_roles(target, reason=f"Assigned by admin {interaction.user.id}")
+    await interaction.response.send_message(f"Rolle {target.id} wurde {user.mention} gegeben.", ephemeral=True)
+    await write_log(f"Rolle vergeben | Rollen-ID: {target.id} | User-ID: {user.id} | Admin-ID: {interaction.user.id}")
+
+@bot.tree.command(name="role_remove", description="Entfernt eine Rolle von einem User anhand der Rollen-ID")
+async def role_remove(interaction: discord.Interaction, user: discord.Member, role_id: str):
+    if not is_admin(interaction.user): return await deny(interaction)
+    try: target = interaction.guild.get_role(int(role_id))
+    except ValueError: return await interaction.response.send_message("Ungültige Rollen-ID.", ephemeral=True)
+    if not target: return await interaction.response.send_message("Rolle nicht gefunden.", ephemeral=True)
+    await user.remove_roles(target, reason=f"Removed by admin {interaction.user.id}")
+    await interaction.response.send_message(f"Rolle {target.id} wurde {user.mention} entfernt.", ephemeral=True)
+    await write_log(f"Rolle entfernt | Rollen-ID: {target.id} | User-ID: {user.id} | Admin-ID: {interaction.user.id}")
+
 if __name__ == "__main__":
     if not TOKEN or TOKEN == "DEIN_DISCORD_BOT_TOKEN":
         raise SystemExit("Bitte den Bot-Token in config.json eintragen.")
