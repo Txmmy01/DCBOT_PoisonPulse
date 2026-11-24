@@ -411,6 +411,16 @@ async def on_message(message):
 async def on_app_command_completion(interaction, command):
     await write_log(f"Slash-Command ausgeführt | Command: /{command.qualified_name} | User-ID: {interaction.user.id} | Channel-ID: {interaction.channel_id}")
 
+
+@bot.tree.error
+async def on_app_command_error(interaction, error):
+    original = error.original if isinstance(error, app_commands.CommandInvokeError) else error
+    if interaction.response.is_done():
+        await interaction.followup.send("Der Befehl konnte nicht ausgeführt werden.", ephemeral=True)
+    else:
+        await interaction.response.send_message("Der Befehl konnte nicht ausgeführt werden.", ephemeral=True)
+    await write_log(f"Slash-Command fehlgeschlagen | User-ID: {interaction.user.id} | Command: {interaction.command.qualified_name if interaction.command else 'Unbekannt'} | Fehler: {type(original).__name__}: {original}")
+
 @bot.tree.command(name="setup_panels", description="Veröffentlicht Support-, Team- und Clan-Panels")
 async def setup_panels(interaction: discord.Interaction):
     if not is_admin(interaction.user):
