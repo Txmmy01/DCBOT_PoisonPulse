@@ -1,0 +1,9 @@
+config.json
+poisonpulse.db
+poisonpulse.db-shm
+poisonpulse.db-wal
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
