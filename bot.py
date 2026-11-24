@@ -427,7 +427,7 @@ async def setup_panels(interaction: discord.Interaction):
         return await deny(interaction)
     await interaction.response.defer(ephemeral=True)
     panels = [
-        ("welcome_channel_id", "Support", "Erstelle ein Ticket für Support, Bug, Frage oder Sonstiges.", SupportPanel()),
+        ("support_panel_channel_id", "Support", "Erstelle ein Ticket für Support, Bug, Frage oder Sonstiges.", SupportPanel()),
         ("team_bewerbung_channel_id", "Team-Bewerbung", "Bewirb dich für das Team. Fülle das Formular vollständig aus.", ApplicationPanel("team")),
         ("clan_bewerbung_channel_id", "Clan-Bewerbung", f"Eintrittsgeld: {CONFIG.get('clan_entry_fee', 'Bitte beim Team erfragen')}\nVoraussetzungen: {CONFIG.get('clan_requirements', 'Bitte beim Team erfragen')}\n\nBewirb dich über den Button.", ApplicationPanel("clan")),
     ]
