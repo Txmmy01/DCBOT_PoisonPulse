@@ -119,7 +119,7 @@ def parse_duration(value):
 
 def ticket_staff_keys(kind):
     if kind == "clan":
-        return ("clanmodperms_role_id", "adminperms_role_id")
+        return ("clanmodperms_role_id", "ticketperms_role_id", "adminperms_role_id")
     if kind == "team":
         return ("ticketperms_role_id", "adminperms_role_id")
     return ("ticketperms_role_id", "adminperms_role_id")
