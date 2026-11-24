@@ -17,5 +17,8 @@
   "team_role_id": 0,
   "muted_role_id": 0,
   "poisonpulse_emoji_id": 0,
-  "poisonpulse_image_url": ""
+  "poisonpulse_image_url": "",
+  "clan_entry_fee": "HIER EINTRITTSGELD EINTRAGEN",
+  "clan_requirements": "HIER VORAUSSETZUNGEN EINTRAGEN",
+  "server_info_text": "Willkommen auf HugoSMP.net!"
 }
