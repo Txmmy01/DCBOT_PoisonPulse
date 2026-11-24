@@ -2,6 +2,7 @@
   "token": "DEIN_DISCORD_BOT_TOKEN",
   "guild_id": 0,
   "welcome_channel_id": 0,
+  "support_panel_channel_id": 0,
   "support_ticket_category_id": 0,
   "giveaway_channel_id": 0,
   "log_channel_id": 0,
