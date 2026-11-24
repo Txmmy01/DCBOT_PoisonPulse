@@ -10,7 +10,7 @@
 7. `python bot.py` starten. Danach als Admin `/setup_panels` ausführen.
 
 ## Konfiguration
-Die IDs werden ausschließlich aus `config.json` gelesen. Für den Clan-Bewerbungstext außerdem `clan_entry_fee` und `clan_requirements` ausfüllen. `server_info_text` wird in der Willkommensnachricht angezeigt. `poisonpulse_emoji_id` ist die ID des einzigen Branding-Emojis. `poisonpulse_image_url` ist optional.
+Die IDs werden ausschließlich aus `config.json` gelesen. `support_panel_channel_id` bestimmt den Channel für das Support-Panel. Für den Clan-Bewerbungstext außerdem `clan_entry_fee` und `clan_requirements` ausfüllen. `server_info_text` wird in der Willkommensnachricht angezeigt. `poisonpulse_emoji_id` ist die ID des einzigen Branding-Emojis. `poisonpulse_image_url` ist optional.
 
 Das Bot-Profilbild wird separat im Discord Developer Portal als Avatar gesetzt. `guild_id` ist die Server-ID und sorgt für schnellere Slash-Command-Synchronisierung.
 
