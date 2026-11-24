@@ -106,7 +106,7 @@ def make_embed(title, description="", branding=False):
 async def write_log(message=None, file=None):
     channel = bot.get_channel(config_id("log_channel_id"))
     if channel:
-        await channel.send(content=message, file=file)
+        await channel.send(content=message[:1900] if message else None, file=file)
 
 def parse_duration(value):
     match = re.fullmatch(r"(\d+)([smhdw])", value.strip().lower())
@@ -545,7 +545,7 @@ async def unwarn(interaction: discord.Interaction, case_id: int, grund: str):
     DB.execute("UPDATE warnings SET active=0 WHERE id=?", (case_id,))
     DB.commit()
     await interaction.response.send_message(f"Verwarnung #{case_id} wurde entfernt.")
-    await write_log(f"Unwarn | Case-ID: {case_id} | User-ID: {row['user_id']} | Mod-ID: {interaction.user.id} | Grund: {grund}")
+    await write_log(f"Unwarn | Case-ID: {case_id} | User-ID: {row['user_id']} | Mod-ID: {interaction.user.id} | Grund: {grund} | Zeit: {datetime.now(timezone.utc).isoformat()}")
 
 @bot.tree.command(name="config_set", description="Ändert einen Eintrag in der Bot-Konfiguration")
 @app_commands.describe(key="Config-Schlüssel", value="Neue ID oder Wert")
