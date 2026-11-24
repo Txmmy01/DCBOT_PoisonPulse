@@ -248,7 +248,7 @@ class ApplicationModal(discord.ui.Modal):
     def __init__(self, kind):
         super().__init__(title="Team-Bewerbung" if kind == "team" else "Clan-Bewerbung", timeout=300)
         self.kind = kind
-        labels = ["Minecraft-Name", "Alter", "Erfahrung", "Warum Team?", "Wie viel Zeit?"] if kind == "team" else ["Minecraft-Name", "Alter", "Playtime auf HugoSMP.net", "Warum Clan?"]
+        labels = ["Minecraft-Name", "Alter", "Erfahrung", "Warum Team?", "Wie viel Zeit?"] if kind == "team" else ["Minecraft-Name", "Alter", "Spielzeit auf dem Server", "Warum Clan?"]
         self.fields = []
         for label in labels:
             field = discord.ui.TextInput(label=label, max_length=500, style=discord.TextStyle.paragraph)
@@ -380,7 +380,7 @@ async def on_ready():
 async def on_member_join(member):
     channel = bot.get_channel(config_id("welcome_channel_id"))
     if channel:
-        await channel.send(embed=make_embed("Willkommen bei PoisonPulse", f"Willkommen {member.mention} auf **HugoSMP.net**! {CONFIG.get('server_info_text', 'Schön, dass du dabei bist.')} Bei Fragen kannst du dich an den Support wenden.", True))
+        await channel.send(embed=make_embed("Willkommen bei PoisonPulse", f"Willkommen {member.mention} bei **PoisonPulse**! {CONFIG.get('server_info_text', 'Schön, dass du dabei bist.')} Bei Fragen kannst du dich an den Support wenden.", True))
     await write_log(f"User beigetreten | User: {member} | ID: {member.id}")
 
 @bot.event
